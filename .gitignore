@@ -11,3 +11,5 @@
 *.png
 *.svg
 *.dot
+.solargraph.yml
+Gemfile.lock

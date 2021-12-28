@@ -3,6 +3,8 @@ require_relative 'printer'
 require_relative 'node'
 
 class Graph
+
+  # @param name [String] The name of the graph
   def initialize(name)
     @name = name
     @nodes = {} # name => Node
@@ -13,9 +15,10 @@ class Graph
   end
 
   # Adds a new edge between the source and destination, possibly creating the nodes if missing.
+  # @param src [String, Symbol] the name of the edge
   def new_edge(src, dst)
-    new_node(src)
-    new_node(dst)
+    node(src)
+    node(dst)
     @edges[src] = {} unless @edges.include? src
     entry = @edges[src]
     if entry[dst] == nil
@@ -25,8 +28,16 @@ class Graph
     end
   end
 
-  # Adds a node of given name unless it already exists.
-  def new_node(name, attrs = {})
+  def nodes
+    @nodes
+  end
+
+  # Adds a node of given name and attributes
+  # If a node of the same name already exists simply  apply attributes onto it.
+  #
+  # @param name [String, Symbol] The name of the node
+  # @param attrs [Hash] The node's attributes.
+  def node(name, attrs = {})
     attrs = @node_default_attrs.merge attrs
     @nodes[name] = Node.new name, attrs unless @nodes.include? name
   end

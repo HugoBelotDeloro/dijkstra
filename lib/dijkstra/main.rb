@@ -14,9 +14,9 @@ g = Graph.new 'my_test_graph'
 
 g.set_default_node_attrs shape: 'circle', style: 'filled', penwidth: penwidth, color: border_color
 
-g.new_node :a, fillcolor: '"#bc5653"'
-g.new_node :b, fillcolor: '"#909d63"'
-g.new_node :c, fillcolor: '"#7eaac7"'
+g.node :a, fillcolor: '"#bc5653"'
+g.node :b, fillcolor: '"#909d63"'
+g.node :c, fillcolor: '"#7eaac7"'
 
 
 g.new_edge :a, :b
