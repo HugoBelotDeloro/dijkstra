@@ -24,6 +24,15 @@ class Attributes
   def is_valid_target_for? attr_name
     ATTRIBUTES[attr_name][1].has_key? @type
   end
+
+  def to_s
+    return '[]' if @attrs.empty?
+    s = String.new
+    attrs = @attrs.map do |name, value|
+      "#{name}=\"#{value}\""
+    end.join ', '
+    "[#{attrs}]"
+  end
 end
 
 # Is this attribute valid ?
@@ -32,10 +41,11 @@ def attribute_exists?(attr_name)
   ATTRIBUTES.has_key? attr_name
 end
 
-# A hash matching each attribute name to an array containing its type, default value and valid targets.
+# A hash matching each attribute name to an array containing an array of its allowed types  and a hash associating each valid target to its default value.
 # @type [{Symbol => (<Symbol>, {:graph, :cluster, :node, :edge => String})}] ATTRIBUTES
 ATTRIBUTES = {
   :color => [[:color, :colorList], {cluster: 'black', edge: 'black', node: 'black'}],
   :fillcolor => [[:color, :colorList], {cluster: 'black', edge: 'black', node: 'lightgrey'}],
   :rankdir => [[:rankdir], {graph: 'TB'}],
+  class: [[:string], {edge: '', node: '', cluster: '', graph: ''}],
 }

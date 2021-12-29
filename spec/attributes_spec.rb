@@ -1,6 +1,6 @@
 require 'dijkstra'
 
-describe 'Attributes' do
+describe Attributes do
   before :each do
     @attrs = Attributes.new :graph
   end
@@ -28,5 +28,27 @@ describe 'Attributes' do
   it 'should correctly add valid attributes' do
     @attrs.add :rankdir => 'LR'
     expect(@attrs.attrs[:rankdir]).to eq 'LR'
+  end
+
+  it 'should overwrite duplicates' do
+    @attrs.add :rankdir => 'LR'
+    @attrs.add :rankdir => 'TB'
+    expect(@attrs.attrs[:rankdir]).to eq 'TB'
+  end
+
+  context 'when converting to string' do
+    it 'should print "[]" when empty' do
+      expect(@attrs.to_s).to eq '[]'
+    end
+
+    it 'should print single attributes correctly' do
+      @attrs.add rankdir: 'LR'
+      expect(@attrs.to_s).to eq '[rankdir="LR"]'
+    end
+
+    it 'should print multiple attributes correctly' do
+      @attrs.add rankdir: 'LR', class: 'myClass'
+      expect(@attrs.to_s).to eq '[rankdir="LR", class="myClass"]'
+    end
   end
 end
